@@ -28,7 +28,11 @@ class Gameboard {
     gameBoardContainer.appendChild(gameBoard);
     return gameBoardContainer;
   }
+  getGrid() {
+    return this.grid;
+  }
 }
 
-//const game = new Gameboard().createGameBoard();
-//document.body.appendChild(game);
+const gameboard = new Gameboard(); // Create a Gameboard instance
+const game = new Gameboard().createGameBoard();
+document.body.appendChild(game);
