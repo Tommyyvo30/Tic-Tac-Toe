@@ -1,38 +1,59 @@
-class Gameboard {
+class Grid{
   constructor() {
-    this.grid = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
-    ];
-  }
-
-  createGameBoard() {
-    const gameBoardContainer = document.createElement("div");
-    gameBoardContainer.className = "gameBoardContainer";
-
-    const gameBoard = document.createElement("div");
-    gameBoard.className = "gameBoard";
-
-    for (let i = 0; i < this.grid.length; i++) {
-      let row = document.createElement("div");
-      row.className = "row";
-      gameBoard.appendChild(row);
-      for (let j = 0; j < this.grid.length; j++) {
-        const cell = document.createElement("div");
-        cell.className = "cell";
-        row.appendChild(cell);
-      }
+      this.grid = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
+      ];
     }
 
-    gameBoardContainer.appendChild(gameBoard);
-    return gameBoardContainer;
+render(){ 
+  const gameBoardContainer = document.createElement('div');
+  gameBoardContainer.className = "gameBoardContainer";
+
+  const gameBoard = document.createElement("div");
+  gameBoard.className = "gameBoard"
+
+  for(let i = 0; i < this.grid.length; i++){
+      let row = document.createElement('div');
+      row.className = "row";
+      gameBoard.appendChild(row);
+      for(let j = 0; j < this.grid.length; j++){
+          const cell = document.createElement('div')
+          cell.className = 'cell';
+          row.appendChild(cell);
+      }
   }
-  getGrid() {
-    return this.grid;
+ 
+  gameBoardContainer.appendChild(gameBoard)
+  document.body.appendChild(gameBoardContainer);
+  return gameBoardContainer;
+}
+
+}
+
+class Player{
+  constructor(playerMarker){
+      this.playerMarker = playerMarker;
+  }
+  //add click event listener to change to playerMarker, after remove it
+  handleClick(){
+     const selectCells = document.querySelectorAll('.cell');
+     const playerMarker = this.playerMarker;
+
+     selectCells.forEach(cell => {
+      cell.addEventListener('click', () =>{
+          if(cell.textContent === "");
+          cell.textContent = playerMarker;
+          cell.removeEventListener('click', this.handleClick);
+      })
+     })
+
   }
 }
 
-const gameboard = new Gameboard(); // Create a Gameboard instance
-const game = new Gameboard().createGameBoard();
-document.body.appendChild(game);
+
+const grid = new Grid();
+grid.render();
+const playerX = new Player("X");
+playerX.handleClick();
