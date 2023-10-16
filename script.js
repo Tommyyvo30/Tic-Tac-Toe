@@ -36,16 +36,17 @@ class Player{
   constructor(playerMarker){
       this.playerMarker = playerMarker;
   }
-  //add click event listener to change to playerMarker, after remove it
   handleClick(){
      const selectCells = document.querySelectorAll('.cell');
      const playerMarker = this.playerMarker;
 
      selectCells.forEach(cell => {
       cell.addEventListener('click', () =>{
-          if(cell.textContent === "");
-          cell.textContent = playerMarker;
-          cell.removeEventListener('click', this.handleClick);
+          if(cell.textContent === ""){
+            cell.textContent = playerMarker;
+            cell.removeEventListener('click', this.handleClick);
+          }
+          
       })
      })
 
