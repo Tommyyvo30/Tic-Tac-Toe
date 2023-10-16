@@ -1,4 +1,4 @@
-class Grid {
+class Gameboard {
   constructor() {
     this.grid = [
       [null, null, null],
@@ -7,7 +7,7 @@ class Grid {
     ];
   }
 
-  render() {
+  createGameBoard() {
     const gameBoardContainer = document.createElement("div");
     gameBoardContainer.className = "gameBoardContainer";
 
@@ -26,31 +26,13 @@ class Grid {
     }
 
     gameBoardContainer.appendChild(gameBoard);
-    document.body.appendChild(gameBoardContainer);
     return gameBoardContainer;
   }
-}
-
-class Player {
-  constructor(playerMarker) {
-    this.playerMarker = playerMarker;
-  }
-
-  handleClick() {
-    const selectCells = document.querySelectorAll(".cell");
-
-    selectCells.forEach((cell) => {
-      cell.addEventListener("click", () => {
-        if (cell.textContent === "") {
-          cell.textContent = this.playerMarker;
-          cell.removeEventListener("click", this.handleClick);
-        }
-      });
-    });
+  getGrid() {
+    return this.grid;
   }
 }
 
-const grid = new Grid();
-grid.render();
-const playerX = new Player("X");
-playerX.handleClick();
+const gameboard = new Gameboard(); // Create a Gameboard instance
+const game = new Gameboard().createGameBoard();
+document.body.appendChild(game);
