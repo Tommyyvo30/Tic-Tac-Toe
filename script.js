@@ -36,20 +36,18 @@ class Player{
   constructor(playerMarker){
       this.playerMarker = playerMarker;
   }
+
   handleClick(){
      const selectCells = document.querySelectorAll('.cell');
-     const playerMarker = this.playerMarker;
 
      selectCells.forEach(cell => {
       cell.addEventListener('click', () =>{
           if(cell.textContent === ""){
-            cell.textContent = playerMarker;
+            cell.textContent = this.playerMarker;;
             cell.removeEventListener('click', this.handleClick);
           }
-          
       })
      })
-
   }
 }
 
