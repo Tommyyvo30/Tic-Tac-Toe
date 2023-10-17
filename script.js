@@ -52,18 +52,45 @@ class Game {
       cell.addEventListener("click", () => {
         if (cell.textContent === "") {
           cell.textContent = this.currentPlayer.playerMarker;
-          this.currentPlayer =
-            this.currentPlayer === this.player1 ? this.player2 : this.player1; // If condition is true, return player2 otherwise return player1
+          this.switchPlayer();
         }
       });
     });
   }
-  // Create game instance
-  // Create 2 player objects
-  // Create logic to check for win
-  // Handle click
-  // Handle Turns
+  switchPlayer() {
+    this.currentPlayer =
+      this.currentPlayer === this.player1 ? this.player2 : this.player1;
+  }
 }
 
+class Header {
+  createHeader = () => {
+    const header = document.createElement("header");
+    header.className = "header";
+    header.textContent = "Tic-Tac-Toe";
+    return header;
+  };
+}
+
+class Footer {
+  createFooter = () => {
+    const footerContainer = document.createElement("footer");
+    footerContainer.className = "footer";
+    const footer = document.createElement("p");
+    footer.innerHTML = "Copyright © 2023 Thomas Vo ";
+    footerContainer.appendChild(footer);
+    return footerContainer;
+  };
+}
+
+const header = new Header();
+const headerElement = header.createHeader();
+document.body.appendChild(headerElement);
+
 const game = new Game();
+
+const footer = new Footer();
+const footerElement = footer.createFooter();
+document.body.appendChild(footerElement);
+
 game.handleClick();
