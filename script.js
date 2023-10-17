@@ -35,21 +35,35 @@ class Player {
   constructor(playerMarker) {
     this.playerMarker = playerMarker;
   }
+}
+class Game {
+  constructor() {
+    this.gameBoard = new Grid();
+    this.gameBoard.render();
+    this.player1 = new Player("X");
+    this.player2 = new Player("O");
+    this.currentPlayer = this.player1;
+  }
   handleClick() {
     const selectCells = document.querySelectorAll(".cell");
-    const playerMarker = this.playerMarker;
+    let playerMarker = this.playerMarker;
 
     selectCells.forEach((cell) => {
       cell.addEventListener("click", () => {
-        if (cell.textContent === "");
-        cell.textContent = playerMarker;
-        cell.removeEventListener("click", this.handleClick);
+        if (cell.textContent === "") {
+          cell.textContent = this.currentPlayer.playerMarker;
+          this.currentPlayer =
+            this.currentPlayer === this.player1 ? this.player2 : this.player1; // If condition is true, return player2 otherwise return player1
+        }
       });
     });
   }
+  // Create game instance
+  // Create 2 player objects
+  // Create logic to check for win
+  // Handle click
+  // Handle Turns
 }
 
-const grid = new Grid();
-grid.render();
-const playerX = new Player("X");
-playerX.handleClick();
+const game = new Game();
+game.handleClick();
