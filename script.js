@@ -53,6 +53,7 @@ class Game {
         if (cell.textContent === "") {
           cell.textContent = this.currentPlayer.playerMarker;
           this.switchPlayer();
+          //console.log(this.checkForWinner());
         }
       });
     });
@@ -61,8 +62,143 @@ class Game {
     this.currentPlayer =
       this.currentPlayer === this.player1 ? this.player2 : this.player1;
   }
-}
+  checkHorizontal() {
+    const gridLength = this.gameBoard.grid.length;
+    const grid = this.gameBoard.grid;
 
+    for (let i = 0; i < gridLength; i++) {
+      let counter1 = 0;
+      let counter2 = 0;
+      for (let j = 0; j < gridLength; j++) {
+        if (grid[i][j] === this.player1.playerMarker) {
+          counter1++;
+        } else {
+          counter2++;
+        }
+      }
+      if (counter1 === 3) {
+        return this.player1;
+      } else if (counter2 === 3) {
+        return this.player2;
+      }
+    }
+    return null;
+  }
+
+  checkVertical() {
+    const gridLength = this.gameBoard.grid.length;
+    const grid = this.gameBoard.grid;
+    for (let j = 0; j < gridLength; j++) {
+      let counter1 = 0;
+      let counter2 = 0;
+      for (let i = 0; i < gridLength; i++) {
+        if (grid[i][j] === this.player1.playerMarker) {
+          counter1++;
+        } else {
+          counter2++;
+        }
+      }
+      if (counter1 === 3) {
+        return this.player1;
+      } else if (counter2 === 3) {
+        return this.player2;
+      }
+    }
+    return null;
+  }
+
+  checkLeftDiagonal() {
+    const gridLength = this.gameBoard.grid.length;
+    const grid = this.gameBoard.grid;
+    for (let i = 0; i < gridLength; i++) {
+      let counter1 = 0;
+      let counter2 = 0;
+      for (let j = i; j < gridLength; j++) {
+        if (grid[i][j] === this.player1.playerMarker) {
+          counter1++;
+        } else {
+          counter2++;
+        }
+      }
+      if (counter1 === 3) {
+        return this.player1;
+      } else if (counter2 === 3) {
+        return this.player2;
+      }
+    }
+    return null;
+  }
+  checkRightDiagonal() {
+    const gridLength = this.gameBoard.grid.length;
+    const grid = this.gameBoard.grid;
+    for (let i = 0; i < gridLength; i++) {
+      let counter1 = 0;
+      let counter2 = 0;
+      for (let j = gridLength - i - 1; j >= 0; j--) {
+        if (grid[i][j] === this.player1.playerMarker) {
+          counter1++;
+        } else {
+          counter2++;
+        }
+      }
+      if (counter1 === 3) {
+        return this.player1;
+      } else if (counter2 === 3) {
+        return this.player2;
+      }
+    }
+    return null;
+  }
+  checkForWinner() {
+    const winnerHorizontal = this.checkHorizontal();
+    if (winnerHorizontal) {
+      setTimeout(() => {
+        alert(`${winnerHorizontal.playerMarker} has won horizontally!`);
+      }, 1000);
+      return winnerHorizontal;
+    }
+
+    const winnerVertical = this.checkVertical();
+    if (winnerVertical) {
+      setTimeout(() => {
+        alert(`${winnerVertical.playerMarker} has won vertically!`);
+      }, 1000);
+      return winnerVertical;
+    }
+
+    const winnerLeftDiagonal = this.checkLeftDiagonal();
+    if (winnerLeftDiagonal) {
+      setTimeout(() => {
+        alert(
+          `${winnerLeftDiagonal.playerMarker} has won on the left diagonal!`
+        );
+      }, 1000);
+      return winnerLeftDiagonal;
+    }
+
+    const winnerRightDiagonal = this.checkRightDiagonal();
+    if (winnerRightDiagonal) {
+      setTimeout(() => {
+        alert(
+          `${winnerRightDiagonal.playerMarker} has won on the right diagonal!`
+        );
+      }, 1000);
+      return winnerRightDiagonal;
+    }
+
+    return null;
+  }
+  startGame() {}
+  resetGame() {}
+}
+class resetButton {
+  createBtn = () => {
+    const resetBtn = document.createElement("button");
+    resetBtn.className = "resetBtn";
+    resetBtn.textContent = "Reset";
+    return resetBtn;
+  };
+}
 class Header {
   createHeader = () => {
     const header = document.createElement("header");
