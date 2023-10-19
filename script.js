@@ -1,9 +1,9 @@
 class Grid {
   constructor() {
     this.grid = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
     ];
   }
 
@@ -46,23 +46,30 @@ class Game {
   }
   handleClick() {
     const selectCells = document.querySelectorAll(".cell");
-    let playerMarker = this.playerMarker;
 
-    selectCells.forEach((cell) => {
+    selectCells.forEach((cell, index) => {
       cell.addEventListener("click", () => {
-        if (cell.textContent === "") {
-          cell.textContent = this.currentPlayer.playerMarker;
-          this.switchPlayer();
-          //console.log(this.checkForWinner());
+        if (cell.innerHTML === "") {
+          const row = Math.floor(index / 3);
+          const col = index % 3;
+          this.gameBoard.grid[row][col] = this.currentPlayer.playerMarker;
+          cell.innerHTML = this.currentPlayer.playerMarker;
+
+          if (this.checkForWinner()) {
+            //reset game
+          } else {
+            this.switchPlayer();
+          }
         }
       });
     });
   }
+
   switchPlayer() {
     this.currentPlayer =
       this.currentPlayer === this.player1 ? this.player2 : this.player1;
   }
-  checkHorizontal() {
+  checkVertical() {
     const gridLength = this.gameBoard.grid.length;
     const grid = this.gameBoard.grid;
 
@@ -72,7 +79,7 @@ class Game {
       for (let j = 0; j < gridLength; j++) {
         if (grid[i][j] === this.player1.playerMarker) {
           counter1++;
-        } else {
+        } else if (grid[i][j] === this.player2.playerMarker) {
           counter2++;
         }
       }
@@ -82,10 +89,10 @@ class Game {
         return this.player2;
       }
     }
-    return null;
+    return "";
   }
 
-  checkVertical() {
+  checkHorizontal() {
     const gridLength = this.gameBoard.grid.length;
     const grid = this.gameBoard.grid;
     for (let j = 0; j < gridLength; j++) {
@@ -94,7 +101,7 @@ class Game {
       for (let i = 0; i < gridLength; i++) {
         if (grid[i][j] === this.player1.playerMarker) {
           counter1++;
-        } else {
+        } else if (grid[i][j] === this.player2.playerMarker) {
           counter2++;
         }
       }
@@ -104,89 +111,86 @@ class Game {
         return this.player2;
       }
     }
-    return null;
+    return "";
   }
 
   checkLeftDiagonal() {
     const gridLength = this.gameBoard.grid.length;
     const grid = this.gameBoard.grid;
+    let counter1 = 0;
+    let counter2 = 0;
+
     for (let i = 0; i < gridLength; i++) {
-      let counter1 = 0;
-      let counter2 = 0;
-      for (let j = i; j < gridLength; j++) {
-        if (grid[i][j] === this.player1.playerMarker) {
-          counter1++;
-        } else {
-          counter2++;
-        }
-      }
-      if (counter1 === 3) {
-        return this.player1;
-      } else if (counter2 === 3) {
-        return this.player2;
+      if (grid[i][i] === this.player1.playerMarker) {
+        counter1++;
+      } else if (grid[i][i] === this.player2.playerMarker) {
+        counter2++;
       }
     }
-    return null;
+
+    if (counter1 === 3) {
+      return this.player1;
+    } else if (counter2 === 3) {
+      return this.player2;
+    }
+
+    return "";
   }
+
   checkRightDiagonal() {
     const gridLength = this.gameBoard.grid.length;
     const grid = this.gameBoard.grid;
+    let counter1 = 0;
+    let counter2 = 0;
+
     for (let i = 0; i < gridLength; i++) {
-      let counter1 = 0;
-      let counter2 = 0;
-      for (let j = gridLength - i - 1; j >= 0; j--) {
-        if (grid[i][j] === this.player1.playerMarker) {
-          counter1++;
-        } else {
-          counter2++;
-        }
-      }
-      if (counter1 === 3) {
-        return this.player1;
-      } else if (counter2 === 3) {
-        return this.player2;
+      if (grid[i][gridLength - i - 1] === this.player1.playerMarker) {
+        counter1++;
+      } else if (grid[i][gridLength - i - 1] === this.player2.playerMarker) {
+        counter2++;
       }
     }
-    return null;
+
+    if (counter1 === 3) {
+      return this.player1;
+    } else if (counter2 === 3) {
+      return this.player2;
+    }
+
+    return "";
   }
+
   checkForWinner() {
     const winnerHorizontal = this.checkHorizontal();
     if (winnerHorizontal) {
-      setTimeout(() => {
-        alert(`${winnerHorizontal.playerMarker} has won horizontally!`);
-      }, 1000);
+      alert(`${winnerHorizontal.playerMarker} has won horizontally!`);
       return winnerHorizontal;
     }
 
     const winnerVertical = this.checkVertical();
     if (winnerVertical) {
-      setTimeout(() => {
-        alert(`${winnerVertical.playerMarker} has won vertically!`);
-      }, 1000);
+      alert(`${winnerVertical.playerMarker} has won vertically!`);
+
       return winnerVertical;
     }
 
     const winnerLeftDiagonal = this.checkLeftDiagonal();
     if (winnerLeftDiagonal) {
-      setTimeout(() => {
-        alert(
-          `${winnerLeftDiagonal.playerMarker} has won on the left diagonal!`
-        );
-      }, 1000);
+      alert(`${winnerLeftDiagonal.playerMarker} has won on the left diagonal!`);
+
       return winnerLeftDiagonal;
     }
 
     const winnerRightDiagonal = this.checkRightDiagonal();
     if (winnerRightDiagonal) {
-      setTimeout(() => {
-        alert(
-          `${winnerRightDiagonal.playerMarker} has won on the right diagonal!`
-        );
-      }, 1000);
+      alert(
+        `${winnerRightDiagonal.playerMarker} has won on the right diagonal!`
+      );
+
       return winnerRightDiagonal;
     }
 
-    return null;
+    return "";
   }
   startGame() {}
   resetGame() {}
