@@ -43,6 +43,7 @@ class Game {
     this.player1 = new Player("X");
     this.player2 = new Player("O");
     this.currentPlayer = this.player1;
+    this.resetButton = new resetButton();
   }
   handleClick() {
     const selectCells = document.querySelectorAll(".cell");
@@ -188,8 +189,23 @@ class Game {
 
     return "";
   }
-  startGame() {}
-  resetGame() {}
+  resetGame() {
+    // Clear the game board
+    this.gameBoard.grid = [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ];
+
+    // Reset the current player to player 1
+    this.currentPlayer = this.player1;
+
+    // Clear the visual game board
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach((cell) => {
+      cell.innerHTML = "";
+    });
+  }
 }
 class resetButton {
   createBtn = () => {
@@ -225,6 +241,10 @@ document.body.appendChild(headerElement);
 
 const game = new Game();
 const resetBtn = new resetButton().createBtn();
+resetBtn.addEventListener("click", () => {
+  game.resetGame();
+});
+document.body.appendChild(resetBtn);
 document.body.appendChild(resetBtn);
 const footer = new Footer();
 const footerElement = footer.createFooter();
