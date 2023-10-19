@@ -9,7 +9,7 @@
     <a href="https://tommyyvo30.github.io/Tic-Tac-Toe/">View Demo</a>
     <br>
     <br>
-    <img src="Images/TTT SC.png">
+    <img src="Images/TTT.png">
   </p>
 </div>
 
