@@ -54,12 +54,8 @@ class Game {
           const col = index % 3;
           this.gameBoard.grid[row][col] = this.currentPlayer.playerMarker;
           cell.innerHTML = this.currentPlayer.playerMarker;
-
-          if (this.checkForWinner()) {
-            //reset game
-          } else {
-            this.switchPlayer();
-          }
+          this.checkForWinner();
+          this.switchPlayer();
         }
       });
     });
@@ -228,7 +224,8 @@ const headerElement = header.createHeader();
 document.body.appendChild(headerElement);
 
 const game = new Game();
-
+const resetBtn = new resetButton().createBtn();
+document.body.appendChild(resetBtn);
 const footer = new Footer();
 const footerElement = footer.createFooter();
 document.body.appendChild(footerElement);
