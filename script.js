@@ -66,6 +66,17 @@ class Game {
     this.currentPlayer =
       this.currentPlayer === this.player1 ? this.player2 : this.player1;
   }
+  checkTie() {
+    for (let i = 0; i < this.gameBoard.grid.length; i++) {
+      for (let j = 0; j < this.gameBoard.grid[i].length; j++) {
+        if (this.gameBoard.grid[i][j] === "") {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   checkVertical() {
     const gridLength = this.gameBoard.grid.length;
     const grid = this.gameBoard.grid;
@@ -186,7 +197,11 @@ class Game {
 
       return winnerRightDiagonal;
     }
-
+    const tie = this.checkTie();
+    if (this.checkTie()) {
+      alert("It's a tie!");
+      return "tie";
+    }
     return "";
   }
   resetGame() {
